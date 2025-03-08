@@ -1,7 +1,7 @@
 name: Validation CI
 
 on:
-    pull_request: # Trigger on every PR
+    pull_request_target: # Trigger on every PR
     workflow_dispatch: # Allow manual triggering
 
 jobs:
