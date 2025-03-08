@@ -34,13 +34,21 @@ docker run -v "/your/path/for/config:/config" ghcr.io/paddecraft/dockerporkbun_d
 
 ## Contributing
 
-If you found an issue, feel free to report it or to open a pull request.
+If you found an issue, feel free to report it or to open a pull request. To prevent unnecessary work, it is recommended to only create pull requests based on open/accepted issues, to ensure your changes are wanted.
 
 ### Local development
 
 I recommend you setup a virtual environment with `python -m venv .venv`. It is already ignored in the `.gitignore`. The entrypoint script is configured to work without the docker container, using the config path `./config.json` by default (configurable through environment `CONFIG_PATH`).
 
 There is also a mode to test the core functionality if `TEST_MODE=true` is set in the environment.
+
+---
+
+Run the following to set up the dependencies:
+```shell
+pip install -r requirements.txt # For general requirements
+pip install -r requirements.test-mode.txt # Only needed for test mode
+```
 
 ## Special thanks to
 
