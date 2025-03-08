@@ -18,7 +18,7 @@ jobs:
                   docker save -o porkbun_ddns.tar porkbun_ddns:latest
 
             - name: Upload Docker Image
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   path: ./porkbun_ddns.tar
 
