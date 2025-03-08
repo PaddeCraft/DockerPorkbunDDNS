@@ -1,2 +1,2 @@
-porkbun-ddns==1.1.10
+porkbun-ddns==1.1.12
 apscheduler==3.11.0
