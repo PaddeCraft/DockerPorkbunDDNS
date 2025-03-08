@@ -1,4 +1,4 @@
-ROM python:3.12.0-alpine
+FROM python:3.12.0-alpine
 
 VOLUME [ "/config" ]
 
