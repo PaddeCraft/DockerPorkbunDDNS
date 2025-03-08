@@ -1,0 +1,43 @@
+name: Validation CI
+
+on:
+    pull_request: # Trigger on every PR
+    workflow_dispatch: # Allow manual triggering
+
+jobs:
+    build_docker:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Build Docker Image
+              run: bash build_docker.sh
+
+            - name: Save Docker Image as Artifact
+              run: |
+                  docker save -o porkbun_ddns.tar porkbun_ddns:latest
+
+            - name: Upload Docker Image
+              uses: actions/upload-artifact@v2
+              with:
+                  path: ./porkbun_ddns.tar
+
+    test-dns-api:
+        runs-on: ubuntu-latest
+        environment:
+            name: validate
+        concurrency:
+            group: dns-api-test # Fixed concurrency group for sequential runs
+            cancel-in-progress: false # Ensures new runs are queued, not canceled
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Create config
+              run: |
+                  echo "{ \"key\": \"${{ secrets.API_KEY }}\", \"secret\": \"${{ secrets.API_SECRET }}\", \"domains\": [\"docker-porkbun-ddns-test.github-ci.paddecraft.dev\"] }" > config.json
+
+            - name: Test
+              run: |
+                  pip install -r requirements.txt
+                  pip install -r requirements.test-mode.txt
+                  TEST_MODE=true python entrypoint.py
